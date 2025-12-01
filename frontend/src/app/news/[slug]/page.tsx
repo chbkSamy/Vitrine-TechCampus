@@ -3,6 +3,7 @@ import { Metadata } from "next";
 
 import { getNewsBySlug, getNewsSlugs } from "@/lib/content";
 import { resolveMediaUrl } from "@/lib/strapi";
+import { formatFrenchDate } from "@/lib/date";
 
 interface NewsDetailPageProps {
   params: { slug: string };
@@ -40,7 +41,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   return (
     <article className="space-y-8">
       <div className="space-y-4">
-        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">{new Date(news.date).toLocaleDateString("fr-FR")}</p>
+        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">{formatFrenchDate(news.date)}</p>
         <h1 className="text-4xl font-semibold text-slate-900">{news.title}</h1>
         <p className="text-lg text-slate-600">{news.excerpt}</p>
       </div>

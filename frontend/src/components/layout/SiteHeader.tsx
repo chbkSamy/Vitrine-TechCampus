@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const navLinks = [
-  { label: "Accueil", href: "#accueil" },
-  { label: "À propos", href: "#apropos" },
-  { label: "Actualité", href: "#actualites" },
-  { label: "Formations", href: "#formations" },
-  { label: "Contact", href: "#contact" },
+  { label: "Accueil", href: "/#accueil" },
+  { label: "À propos", href: "/#apropos" },
+  { label: "Actualité", href: "/#actualites" },
+  { label: "Formations", href: "/#formations" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function SiteHeader() {
@@ -31,7 +31,7 @@ export function SiteHeader() {
     <>
       <header className="sticky top-0 z-50 border-b border-white/40 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
-          <Link href="#accueil" className="group flex items-center gap-2">
+          <Link href="/#accueil" className="group flex items-center gap-2">
             <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-600 text-base font-semibold text-white shadow-inner">
               TC
               <span className="pointer-events-none absolute -inset-1 -z-10 rounded-3xl bg-sky-600/30 blur-xl" />
@@ -49,7 +49,7 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2">
             <Link
-              href="#contact"
+              href="/#contact"
               className="hidden rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-emerald-600 md:inline-flex"
             >
               Candidater
@@ -108,7 +108,7 @@ export function SiteHeader() {
                 </Link>
               ))}
               <Link
-                href="#contact"
+                href="/#contact"
                 className="mt-2 inline-flex items-center justify-center rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-600"
                 onClick={() => setMenuOpen(false)}
               >
