@@ -1,4 +1,4 @@
-const testimonials = [
+const fallbackTestimonials = [
   {
     quote: "L’accompagnement carrière et les projets concrets m’ont permis d’être opérationnelle dès mon alternance.",
     author: "Lina R.",
@@ -16,11 +16,18 @@ const testimonials = [
   },
 ];
 
-interface TestimonialsSectionProps {
-  id?: string;
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
 }
 
-export function TestimonialsSection({ id = "temoignages" }: TestimonialsSectionProps) {
+interface TestimonialsSectionProps {
+  id?: string;
+  testimonials?: Testimonial[];
+}
+
+export function TestimonialsSection({ id = "temoignages", testimonials = fallbackTestimonials }: TestimonialsSectionProps) {
   return (
     <section id={id} className="rounded-3xl bg-gradient-to-b from-white to-emerald-50/50 px-6 py-16 shadow-sm sm:px-10">
       <div className="mx-auto max-w-4xl text-center">

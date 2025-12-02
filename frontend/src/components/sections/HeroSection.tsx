@@ -17,7 +17,14 @@ export function HeroSection({ hero, id = "accueil" }: HeroSectionProps) {
     ctaUrl: "/programs",
   };
 
-  const content = hero ?? fallback;
+  const content: Hero = {
+    title: hero?.title || fallback.title,
+    subtitle: hero?.subtitle || fallback.subtitle,
+    ctaLabel: hero?.ctaLabel || fallback.ctaLabel,
+    ctaUrl: hero?.ctaUrl || fallback.ctaUrl,
+    image: hero?.image || fallback.image,
+  };
+
   const imageUrl = resolveMediaUrl(content.image?.url);
 
   return (

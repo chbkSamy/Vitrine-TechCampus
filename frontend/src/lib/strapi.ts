@@ -51,7 +51,8 @@ export async function fetchStrapi<T>(path: string, options: FetchStrapiOptions =
 
 interface StrapiEntity<T> {
   id: number;
-  attributes: T;
+  attributes?: T;
+  [key: string]: any;
 }
 
 type StrapiSingle<T> = { data: StrapiEntity<T> | null };
@@ -59,12 +60,20 @@ type StrapiCollection<T> = { data: StrapiEntity<T>[] };
 
 export const fromSingle = <T>(payload: StrapiSingle<T>): (T & { id: number }) | null => {
   if (!payload?.data) return null;
-  return { id: payload.data.id, ...payload.data.attributes };
+  if (payload.data.attributes) {
+    return { id: payload.data.id, ...payload.data.attributes };
+  }
+  return payload.data as unknown as T & { id: number };
 };
 
 export const fromCollection = <T>(payload: StrapiCollection<T>): Array<T & { id: number }> => {
   if (!payload?.data?.length) return [];
-  return payload.data.map((entry) => ({ id: entry.id, ...entry.attributes }));
+  return payload.data.map((entry) => {
+    if (entry.attributes) {
+      return { id: entry.id, ...entry.attributes };
+    }
+    return entry as unknown as T & { id: number };
+  });
 };
 
 interface MediaAttributes {
@@ -80,9 +89,15 @@ interface MediaRelation {
 
 export const pickMedia = (relation?: MediaRelation | null) => {
   if (!relation?.data) return null;
+  if (relation.data.attributes) {
+    return {
+      id: relation.data.id,
+      ...relation.data.attributes,
+    };
+  }
   return {
     id: relation.data.id,
-    ...relation.data.attributes,
+    ...relation.data,
   };
 };
 

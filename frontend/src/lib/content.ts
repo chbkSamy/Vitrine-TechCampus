@@ -1,4 +1,13 @@
-import { ContactSettings, Hero, Highlight, Media, NewsItem, Program } from "@/types/content";
+import {
+  ContactSettings,
+  Hero,
+  Highlight,
+  Media,
+  NewsItem,
+  Program,
+  Testimonial,
+  Global,
+} from "@/types/content";
 import { fetchStrapi, fromCollection, fromSingle, pickMedia } from "./strapi";
 
 interface HeroResponse extends Omit<Hero, "image"> {
@@ -44,27 +53,9 @@ export async function getHighlights(): Promise<Highlight[]> {
 
 export async function getNews(limit?: number): Promise<NewsItem[]> {
   try {
-    const now = new Date().toISOString();
     const query: Record<string, string> = {
       populate: "image",
       sort: "date:desc",
-      filters: JSON.stringify({
-        status: { $eq: "published" },
-        $and: [
-          {
-            $or: [
-              { startDate: { $null: true } },
-              { startDate: { $lte: now } },
-            ],
-          },
-          {
-            $or: [
-              { endDate: { $null: true } },
-              { endDate: { $gte: now } },
-            ],
-          },
-        ],
-      }),
     };
 
     if (limit) {
@@ -168,8 +159,21 @@ export async function getContactSettings(): Promise<ContactSettings | null> {
   }
 }
 
-export async function getHomeContent() {
-  const [hero, highlights, latestNews, programs, contact] = await Promise.all([
+async function getGlobal(): Promise<Global | null> {
+  try {
+    const data = await fetchStrapi<{ data: { id: number; attributes: Global } }>("/api/global", {
+      query: { populate: "testimonials" },
+      revalidate: 300,
+    });
+    return fromSingle(data);
+  } catch {
+    return null;
+  }
+}
+
+export async function getHomePageContent() {
+  const [global, hero, highlights, articles, programs, contact] = await Promise.all([
+    getGlobal(),
     getHero(),
     getHighlights(),
     getNews(3),
@@ -177,6 +181,13 @@ export async function getHomeContent() {
     getContactSettings(),
   ]);
 
-  return { hero, highlights, latestNews, programs, contact };
+  return {
+    ...global,
+    hero,
+    highlights,
+    articles,
+    programs,
+    contact,
+  };
 }
 

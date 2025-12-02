@@ -6,6 +6,9 @@ const frenchFormatter = new Intl.DateTimeFormat("fr-FR", {
 });
 
 export function formatFrenchDate(dateInput: string | number | Date) {
-  return frenchFormatter.format(new Date(dateInput));
+  if (!dateInput) return "";
+  const date = new Date(dateInput);
+  if (isNaN(date.getTime())) return "";
+  return frenchFormatter.format(date);
 }
 

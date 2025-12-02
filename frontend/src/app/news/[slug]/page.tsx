@@ -6,7 +6,7 @@ import { resolveMediaUrl } from "@/lib/strapi";
 import { formatFrenchDate } from "@/lib/date";
 
 interface NewsDetailPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: NewsDetailPageProps): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const news = await getNewsBySlug(slug);
   if (!news) {
     return {
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: NewsDetailPageProps): Promise
 }
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const news = await getNewsBySlug(slug);
 
   if (!news) {

@@ -58,3 +58,19 @@ export interface ContactSettings {
   formEnabled?: boolean;
 }
 
+export interface Testimonial {
+  id?: number;
+  quote: string;
+  author: string;
+  role: string;
+}
+
+export interface Global {
+  id?: number;
+  programsTitle?: string;
+  programsSubtitle?: string;
+  articlesTitle?: string;
+  articlesSubtitle?: string;
+  testimonials: Testimonial[];
+}
+
