@@ -78,11 +78,11 @@ export async function getNews(limit?: number): Promise<NewsItem[]> {
 
 export async function getNewsSlugs(): Promise<string[]> {
   try {
-    const data = await fetchStrapi<{ data: Array<{ attributes: { slug: string } }> }>("/api/news", {
+    const data = await fetchStrapi<any>("/api/news", {
       query: { fields: "slug", "pagination[pageSize]": "200" },
       revalidate: 600,
     });
-    return data.data.map((entry) => entry.attributes.slug);
+    return fromCollection(data).map((entry: any) => entry.slug);
   } catch {
     return [];
   }
@@ -94,7 +94,7 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
       data: Array<{ id: number; attributes: NewsResponse }>;
     }>("/api/news", {
       query: {
-        filters: JSON.stringify({ slug: { $eq: slug } }),
+        "filters[slug][$eq]": slug,
         populate: "image",
       },
       revalidate: 60,
@@ -125,11 +125,11 @@ export async function getPrograms(): Promise<Program[]> {
 
 export async function getProgramSlugs(): Promise<string[]> {
   try {
-    const data = await fetchStrapi<{ data: Array<{ attributes: { slug: string } }> }>("/api/programs", {
+    const data = await fetchStrapi<any>("/api/programs", {
       query: { fields: "slug", "pagination[pageSize]": "200" },
       revalidate: 600,
     });
-    return data.data.map((entry) => entry.attributes.slug);
+    return fromCollection(data).map((entry: any) => entry.slug);
   } catch {
     return [];
   }
@@ -138,7 +138,7 @@ export async function getProgramSlugs(): Promise<string[]> {
 export async function getProgramBySlug(slug: string): Promise<Program | null> {
   try {
     const data = await fetchStrapi<{ data: Array<{ id: number; attributes: Program }> }>("/api/programs", {
-      query: { filters: JSON.stringify({ slug: { $eq: slug } }) },
+      query: { "filters[slug][$eq]": slug },
       revalidate: 600,
     });
     const [program] = fromCollection(data);
