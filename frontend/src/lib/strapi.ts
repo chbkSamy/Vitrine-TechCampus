@@ -1,3 +1,4 @@
+import type { Media } from "@/types/content";
 type QueryValue = string | number | boolean | undefined | null;
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || process.env.STRAPI_URL || "http://localhost:1337";
@@ -87,17 +88,21 @@ interface MediaRelation {
   data: StrapiEntity<MediaAttributes> | null;
 }
 
-export const pickMedia = (relation?: MediaRelation | null) => {
-  if (!relation?.data) return null;
-  if (relation.data.attributes) {
-    return {
-      id: relation.data.id,
-      ...relation.data.attributes,
-    };
-  }
+export const pickMedia = (relation?: MediaRelation | null): Media | null => {
+  if (!relation?.data || !relation.data.attributes) return null;
+
+  const { id } = relation.data;
+  const { url, alternativeText, width, height } = relation.data.attributes;
+
+  // Optionnel mais safe : si pas d'URL, on considère que c'est invalide
+  if (!url) return null;
+
   return {
-    id: relation.data.id,
-    ...relation.data,
+    id,
+    url,
+    alternativeText: alternativeText ?? null,
+    width: width ?? null,
+    height: height ?? null,
   };
 };
 

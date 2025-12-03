@@ -10,19 +10,17 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ hero, id = "accueil" }: HeroSectionProps) {
-  const fallback: Hero = {
+  console.log("Hero reçu :", hero);
+  // On définit le contenu final ici :
+  // - Les textes sont "en dur" (statiques)
+  // - Seule l'image regarde si "hero" existe dans Strapi
+  const content = {
     title: "Tech Campus, l’école des bâtisseurs du numérique",
     subtitle: "Formations métiers du digital, projets concrets, accompagnement personnalisé.",
     ctaLabel: "Découvrir nos programmes",
     ctaUrl: "/programs",
-  };
-
-  const content: Hero = {
-    title: hero?.title || fallback.title,
-    subtitle: hero?.subtitle || fallback.subtitle,
-    ctaLabel: hero?.ctaLabel || fallback.ctaLabel,
-    ctaUrl: hero?.ctaUrl || fallback.ctaUrl,
-    image: hero?.image || fallback.image,
+    // C'est la seule ligne dynamique : on prend l'image de Strapi si elle existe, sinon rien
+    image: hero?.image ?? null,
   };
 
   const imageUrl = resolveMediaUrl(content.image?.url);
@@ -70,7 +68,7 @@ export function HeroSection({ hero, id = "accueil" }: HeroSectionProps) {
                 alt={content.image?.alternativeText || content.title}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 1023px) 100vw, 50vw"
                 priority
               />
             ) : (
@@ -82,4 +80,3 @@ export function HeroSection({ hero, id = "accueil" }: HeroSectionProps) {
     </section>
   );
 }
-

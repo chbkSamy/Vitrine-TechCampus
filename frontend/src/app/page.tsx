@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      <HeroSection hero={hero} />
+      <HeroSection data={hero} />
       <div className="flex flex-col gap-20 sm:gap-24 md:gap-28">
         <ProgramsSection
           programs={programs}

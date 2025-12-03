@@ -24,7 +24,8 @@
     "type": {
       "type": "enumeration",
       "enum": [
-        "initial, apprentissage"
+        "initial",
+        " apprentissage"
       ]
     },
     "shortDescription": {

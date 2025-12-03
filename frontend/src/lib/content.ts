@@ -25,9 +25,11 @@ interface NewsResponse extends Omit<NewsItem, "image"> {
 export async function getHero(): Promise<Hero | null> {
   try {
     const data = await fetchStrapi<{ data: { id: number; attributes: HeroResponse } }>("/api/hero", {
-      query: { populate: "image" },
+      query: { populate: "*" },
       revalidate: 300,
     });
+    console.log("Clés reçues de Strapi:", Object.keys(data.data.attributes));
+    console.log("Contenu image:", data.data.attributes.image);
     const hero = fromSingle(data);
     if (!hero) return null;
     return {
@@ -180,6 +182,8 @@ export async function getHomePageContent() {
     getPrograms(),
     getContactSettings(),
   ]);
+
+  console.log("Hero object:", hero);
 
   return {
     ...global,

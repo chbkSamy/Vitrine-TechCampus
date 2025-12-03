@@ -616,8 +616,8 @@ export interface ApiHeroHero extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::hero.hero'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    Subtitle: Schema.Attribute.String;
-    Title: Schema.Attribute.String;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -711,7 +711,7 @@ export interface ApiProgramProgram extends Struct.CollectionTypeSchema {
     shortDescription: Schema.Attribute.Text;
     slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String;
-    type: Schema.Attribute.Enumeration<['initial, apprentissage']>;
+    type: Schema.Attribute.Enumeration<['initial', ' apprentissage']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
