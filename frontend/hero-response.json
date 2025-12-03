@@ -1,0 +1,86 @@
+﻿{
+    "data":  {
+                 "id":  6,
+                 "documentId":  "p7m5uxw8bozeham49emjc39g",
+                 "title":  "test",
+                 "subtitle":  "test",
+                 "ctaLabel":  null,
+                 "ctaUrl":  null,
+                 "createdAt":  "2025-12-02T09:04:04.465Z",
+                 "updatedAt":  "2025-12-03T15:52:04.075Z",
+                 "publishedAt":  "2025-12-03T15:52:04.095Z",
+                 "image":  {
+                               "id":  3,
+                               "documentId":  "ost4n0v5w95u4pr4bd0pfzj6",
+                               "name":  "logo-YukaBis.png",
+                               "alternativeText":  null,
+                               "caption":  null,
+                               "width":  1024,
+                               "height":  1024,
+                               "formats":  {
+                                               "thumbnail":  {
+                                                                 "name":  "thumbnail_logo-YukaBis.png",
+                                                                 "hash":  "thumbnail_logo_Yuka_Bis_fa0244b6e9",
+                                                                 "ext":  ".png",
+                                                                 "mime":  "image/png",
+                                                                 "path":  null,
+                                                                 "width":  156,
+                                                                 "height":  156,
+                                                                 "size":  29.16,
+                                                                 "sizeInBytes":  29161,
+                                                                 "url":  "/uploads/thumbnail_logo_Yuka_Bis_fa0244b6e9.png"
+                                                             },
+                                               "small":  {
+                                                             "name":  "small_logo-YukaBis.png",
+                                                             "hash":  "small_logo_Yuka_Bis_fa0244b6e9",
+                                                             "ext":  ".png",
+                                                             "mime":  "image/png",
+                                                             "path":  null,
+                                                             "width":  500,
+                                                             "height":  500,
+                                                             "size":  217.95,
+                                                             "sizeInBytes":  217947,
+                                                             "url":  "/uploads/small_logo_Yuka_Bis_fa0244b6e9.png"
+                                                         },
+                                               "medium":  {
+                                                              "name":  "medium_logo-YukaBis.png",
+                                                              "hash":  "medium_logo_Yuka_Bis_fa0244b6e9",
+                                                              "ext":  ".png",
+                                                              "mime":  "image/png",
+                                                              "path":  null,
+                                                              "width":  750,
+                                                              "height":  750,
+                                                              "size":  482.67,
+                                                              "sizeInBytes":  482672,
+                                                              "url":  "/uploads/medium_logo_Yuka_Bis_fa0244b6e9.png"
+                                                          },
+                                               "large":  {
+                                                             "name":  "large_logo-YukaBis.png",
+                                                             "hash":  "large_logo_Yuka_Bis_fa0244b6e9",
+                                                             "ext":  ".png",
+                                                             "mime":  "image/png",
+                                                             "path":  null,
+                                                             "width":  1000,
+                                                             "height":  1000,
+                                                             "size":  793.37,
+                                                             "sizeInBytes":  793373,
+                                                             "url":  "/uploads/large_logo_Yuka_Bis_fa0244b6e9.png"
+                                                         }
+                                           },
+                               "hash":  "logo_Yuka_Bis_fa0244b6e9",
+                               "ext":  ".png",
+                               "mime":  "image/png",
+                               "size":  171.77,
+                               "url":  "/uploads/logo_Yuka_Bis_fa0244b6e9.png",
+                               "previewUrl":  null,
+                               "provider":  "local",
+                               "provider_metadata":  null,
+                               "createdAt":  "2025-12-03T15:13:53.494Z",
+                               "updatedAt":  "2025-12-03T15:13:53.494Z",
+                               "publishedAt":  "2025-12-03T15:13:53.494Z"
+                           }
+             },
+    "meta":  {
+
+             }
+}

@@ -2,9 +2,10 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getProgramBySlug, getProgramSlugs } from "@/lib/content";
+import BlocksRenderer from "@/lib/render-blocks";
 
 interface ProgramDetailPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -13,7 +14,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProgramDetailPageProps): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const program = await getProgramBySlug(slug);
   if (!program) {
     return {
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: ProgramDetailPageProps): Prom
 }
 
 export default async function ProgramDetailPage({ params }: ProgramDetailPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const program = await getProgramBySlug(slug);
 
   if (!program) {
@@ -47,7 +48,11 @@ export default async function ProgramDetailPage({ params }: ProgramDetailPagePro
         </div>
       </div>
       <div className="space-y-6 text-base leading-relaxed text-slate-700">
-        <p>{program.longDescription ?? "Le détail du programme sera bientôt disponible."}</p>
+        {program.longDescription && (
+          typeof program.longDescription === 'string'
+            ? <p>{program.longDescription}</p>
+            : <BlocksRenderer content={program.longDescription as any} />
+        )}
         {program.prerequisites && (
           <div className="space-y-3">
             <h2 className="text-2xl font-semibold text-slate-900">Prérequis</h2>

@@ -10,12 +10,12 @@ import {
 } from "@/types/content";
 import { fetchStrapi, fromCollection, fromSingle, pickMedia } from "./strapi";
 
-interface HeroResponse extends Omit<Hero, "image"> {
+interface HeroResponse {
   title: string;
   subtitle: string;
-  ctaLabel: string;
-  ctaUrl: string;
-  image?: { data: { id: number; attributes: Media } | null };
+  ctaLabel: string | null;
+  ctaUrl: string | null;
+  image?: Media | null;
 }
 
 interface NewsResponse extends Omit<NewsItem, "image"> {
@@ -24,19 +24,46 @@ interface NewsResponse extends Omit<NewsItem, "image"> {
 
 export async function getHero(): Promise<Hero | null> {
   try {
+    console.log("🔍 Fetching hero from Strapi...");
     const data = await fetchStrapi<{ data: { id: number; attributes: HeroResponse } }>("/api/hero", {
       query: { populate: "*" },
       revalidate: 300,
     });
-    console.log("Clés reçues de Strapi:", Object.keys(data.data.attributes));
-    console.log("Contenu image:", data.data.attributes.image);
+
+    console.log("📥 Raw Strapi response:", JSON.stringify(data, null, 2));
+
+    if (!data.data) {
+      console.log("❌ No data.data in response");
+      return null;
+    }
+
+    console.log("📋 Attributes:", data.data.attributes);
+    console.log("🖼️ Image field:", data.data.attributes?.image);
+
     const hero = fromSingle(data);
-    if (!hero) return null;
-    return {
-      ...hero,
-      image: pickMedia(hero.image as never),
+    console.log("🔄 After fromSingle:", JSON.stringify(hero, null, 2));
+
+    if (!hero) {
+      console.log("❌ Hero is null after fromSingle");
+      return null;
+    }
+
+    // L'image vient déjà traitée par fromSingle car Strapi la retourne directement
+    console.log("🖼️ Hero.image (already from Strapi):", hero.image);
+
+    const result: Hero = {
+      id: hero.id,
+      title: hero.title || "",
+      subtitle: hero.subtitle || "",
+      ctaLabel: hero.ctaLabel || "",
+      ctaUrl: hero.ctaUrl || "",
+      image: hero.image || null,
     };
-  } catch {
+    console.log("✅ Final hero object:", JSON.stringify(result, null, 2));
+
+    return result;
+  } catch (error) {
+    console.error("❌ Error in getHero:", error);
     return null;
   }
 }
@@ -52,6 +79,7 @@ export async function getHighlights(): Promise<Highlight[]> {
     return [];
   }
 }
+
 
 export async function getNews(limit?: number): Promise<NewsItem[]> {
   try {
@@ -131,21 +159,29 @@ export async function getProgramSlugs(): Promise<string[]> {
       query: { fields: "slug", "pagination[pageSize]": "200" },
       revalidate: 600,
     });
-    return fromCollection(data).map((entry: any) => entry.slug);
-  } catch {
+    const slugs = fromCollection(data).map((entry: any) => entry.slug);
+    console.log("Slugs for generateStaticParams:", slugs);
+    return slugs;
+  } catch (error) {
+    console.error("Error fetching program slugs for generateStaticParams:", error);
     return [];
   }
 }
 
 export async function getProgramBySlug(slug: string): Promise<Program | null> {
   try {
+    console.log("Fetching program by slug:", slug);
     const data = await fetchStrapi<{ data: Array<{ id: number; attributes: Program }> }>("/api/programs", {
-      query: { "filters[slug][$eq]": slug },
+      query: {
+        "filters[slug][$eq]": slug
+      },
       revalidate: 600,
     });
     const [program] = fromCollection(data);
+    console.log("Program fetched by slug:", program ? program.slug : "not found");
     return program ?? null;
-  } catch {
+  } catch (error) {
+    console.error(`Error fetching program by slug ${slug}:`, error);
     return null;
   }
 }
@@ -182,8 +218,6 @@ export async function getHomePageContent() {
     getPrograms(),
     getContactSettings(),
   ]);
-
-  console.log("Hero object:", hero);
 
   return {
     ...global,
