@@ -18,38 +18,34 @@ interface HeroResponse {
   image?: Media | null;
 }
 
-interface NewsResponse extends Omit<NewsItem, "image"> {
-  image?: { data: { id: number; attributes: Media } | null };
+interface NewsResponse {
+  title: string;
+  slug: string;
+  date: string;
+  excerpt: string;
+  content: string;
+  status?: string;
+  startDate?: string | null;
+  endDate?: string | null;
+  image?: Media | null;
 }
 
 export async function getHero(): Promise<Hero | null> {
   try {
-    console.log("🔍 Fetching hero from Strapi...");
     const data = await fetchStrapi<{ data: { id: number; attributes: HeroResponse } }>("/api/hero", {
-      query: { populate: "*" },
+      query: { populate: "image" },
       revalidate: 300,
     });
 
-    console.log("📥 Raw Strapi response:", JSON.stringify(data, null, 2));
-
     if (!data.data) {
-      console.log("❌ No data.data in response");
       return null;
     }
-
-    console.log("📋 Attributes:", data.data.attributes);
-    console.log("🖼️ Image field:", data.data.attributes?.image);
 
     const hero = fromSingle(data);
-    console.log("🔄 After fromSingle:", JSON.stringify(hero, null, 2));
 
     if (!hero) {
-      console.log("❌ Hero is null after fromSingle");
       return null;
     }
-
-    // L'image vient déjà traitée par fromSingle car Strapi la retourne directement
-    console.log("🖼️ Hero.image (already from Strapi):", hero.image);
 
     const result: Hero = {
       id: hero.id,
@@ -59,11 +55,10 @@ export async function getHero(): Promise<Hero | null> {
       ctaUrl: hero.ctaUrl || "",
       image: hero.image || null,
     };
-    console.log("✅ Final hero object:", JSON.stringify(result, null, 2));
 
     return result;
   } catch (error) {
-    console.error("❌ Error in getHero:", error);
+    console.error("Error fetching hero:", error);
     return null;
   }
 }
@@ -84,7 +79,7 @@ export async function getHighlights(): Promise<Highlight[]> {
 export async function getNews(limit?: number): Promise<NewsItem[]> {
   try {
     const query: Record<string, string> = {
-      populate: "image",
+      // populate: "image",
       sort: "date:desc",
     };
 
@@ -97,10 +92,8 @@ export async function getNews(limit?: number): Promise<NewsItem[]> {
       revalidate: 60,
     });
 
-    return fromCollection(data).map((item) => ({
-      ...item,
-      image: pickMedia(item.image as never),
-    }));
+    // L'image vient déjà directement de Strapi, pas besoin de pickMedia
+    return fromCollection(data);
   } catch {
     return [];
   }
@@ -132,10 +125,8 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
 
     const [item] = fromCollection(data);
     if (!item) return null;
-    return {
-      ...item,
-      image: pickMedia(item.image as never),
-    };
+    // L'image vient déjà directement de Strapi
+    return item;
   } catch {
     return null;
   }
