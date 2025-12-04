@@ -52,7 +52,7 @@ const BlocksRenderer: React.FC<BlocksRendererProps> = ({ content }) => {
               ))}
             </p>;
           case 'heading':
-            const HeadingTag = `h${block.level || 1}` as keyof JSX.IntrinsicElements;
+            const HeadingTag = `h${block.level || 1}` as React.ElementType;
             return <HeadingTag key={index}>
               {block.children.map((child, childIndex) => (
                 <TextNode key={childIndex} node={child} />
