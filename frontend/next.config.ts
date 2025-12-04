@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export', // For static export on Netlify
   images: {
+    unoptimized: true, // Required for static export
     remotePatterns: [
       {
         protocol: "http",
