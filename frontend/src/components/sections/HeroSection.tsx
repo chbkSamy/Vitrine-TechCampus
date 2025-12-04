@@ -11,15 +11,12 @@ interface HeroSectionProps {
 
 export function HeroSection({ hero, id = "accueil" }: HeroSectionProps) {
   console.log("Hero reçu :", hero);
-  // On définit le contenu final ici :
-  // - Les textes sont "en dur" (statiques)
-  // - Seule l'image regarde si "hero" existe dans Strapi
   const content = {
     title: "Tech Campus, l’école des bâtisseurs du numérique",
     subtitle: "Formations métiers du digital, projets concrets, accompagnement personnalisé.",
     ctaLabel: "Découvrir nos programmes",
     ctaUrl: "/programs",
-    // C'est la seule ligne dynamique : on prend l'image de Strapi si elle existe, sinon rien
+
     image: hero?.image ?? null,
   };
 
@@ -63,14 +60,7 @@ export function HeroSection({ hero, id = "accueil" }: HeroSectionProps) {
         <div className="relative">
           <div className="aspect-[4/3] w-full overflow-hidden rounded-[32px] border border-white bg-white shadow-xl">
             {imageUrl ? (
-              <Image
-                src={imageUrl}
-                alt={content.image?.alternativeText || content.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1023px) 100vw, 50vw"
-                priority
-              />
+               <img src={imageUrl} alt={content.image?.alternativeText || content.title} className="h-[480px] w-full object-cover" />
             ) : (
               <div className="flex h-full items-center justify-center bg-slate-100 text-sm text-slate-500">Image à venir</div>
             )}

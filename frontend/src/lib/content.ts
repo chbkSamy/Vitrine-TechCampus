@@ -36,12 +36,14 @@ export async function getHero(): Promise<Hero | null> {
       query: { populate: "image" },
       revalidate: 300,
     });
+    console.log("Hero reçu :", data);
 
     if (!data.data) {
       return null;
     }
 
     const hero = fromSingle(data);
+    console.log("Hero converti :", hero);
 
     if (!hero) {
       return null;
@@ -92,7 +94,6 @@ export async function getNews(limit?: number): Promise<NewsItem[]> {
       revalidate: 60,
     });
 
-    // L'image vient déjà directement de Strapi, pas besoin de pickMedia
     return fromCollection(data);
   } catch {
     return [];
@@ -125,7 +126,6 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
 
     const [item] = fromCollection(data);
     if (!item) return null;
-    // L'image vient déjà directement de Strapi
     return item;
   } catch {
     return null;

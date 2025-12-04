@@ -6,14 +6,19 @@ const nextConfig: NextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
-        port: "1337", // Port de Strapi par défaut
+        port: "1337",
         pathname: "/uploads/**",
       },
       {
         protocol: "http",
-        hostname: "127.0.0.1", // Ajoute aussi l'IP au cas où
+        hostname: "127.0.0.1",
         port: "1337",
         pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "example.com",
+        pathname: "/account123/**",
       },
     ],
   },
