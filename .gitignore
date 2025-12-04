@@ -1,3 +1,56 @@
-# Project artifacts
-/docs
-/terminals/
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+.cache/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Strapi
+backend/my-strapi-app/.tmp/
+backend/my-strapi-app/build/
+backend/my-strapi-app/node_modules/
+backend/my-strapi-app/.cache/
+backend/my-strapi-app/public/uploads/*
+!backend/my-strapi-app/public/uploads/.gitkeep
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+*.pem
+.vercel
+.turbo/

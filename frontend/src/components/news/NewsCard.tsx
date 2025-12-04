@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { NewsItem } from "@/types/content";
-import { resolveMediaUrl } from "@/lib/strapi";
+import { resolveMediaUrl } from "@/lib/strapi-utils";
 import { formatFrenchDate } from "@/lib/date";
 
 interface NewsCardProps {

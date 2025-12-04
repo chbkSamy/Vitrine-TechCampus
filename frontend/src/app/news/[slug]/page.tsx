@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 import { getNewsBySlug, getNewsSlugs } from "@/lib/content";
-import { resolveMediaUrl } from "@/lib/strapi";
+import { resolveMediaUrl } from "@/lib/strapi-utils";
 import { formatFrenchDate } from "@/lib/date";
 
 interface NewsDetailPageProps {

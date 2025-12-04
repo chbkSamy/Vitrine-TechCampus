@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Hero } from "@/types/content";
-import { resolveMediaUrl } from "@/lib/strapi";
+import { resolveMediaUrl } from "@/lib/strapi-utils";
 
 interface HeroSectionProps {
   hero: Hero | null;
