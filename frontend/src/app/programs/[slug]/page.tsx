@@ -8,6 +8,9 @@ interface ProgramDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Required for static export - only pre-generated paths are valid
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getProgramSlugs();
   return slugs.map((slug) => ({ slug }));

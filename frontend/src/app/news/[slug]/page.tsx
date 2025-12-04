@@ -9,6 +9,9 @@ interface NewsDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Required for static export - only pre-generated paths are valid
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getNewsSlugs();
   return slugs.map((slug) => ({ slug }));
