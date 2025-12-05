@@ -74,7 +74,7 @@ Commandes utiles côté frontend :
 
 - [Documentation Strapi](https://docs.strapi.io) – configuration, contenus, déploiement.
 - [Documentation Next.js](https://nextjs.org/docs) – App Router, ISR, déploiement.
-- `docs/instruction.md` – structure éditoriale spécifique au Tech Campus.
+
 
 Bon développement ! 🎉
 

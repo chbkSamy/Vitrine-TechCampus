@@ -54,3 +54,6 @@ coverage/
 *.pem
 .vercel
 .turbo/
+
+# Documentation personnelle
+/docs
