@@ -54,19 +54,20 @@ export function SiteHeader() {
             >
               Candidater
             </Link>
-            <button
-              type="button"
-              onClick={() => setLoginOpen(true)}
+
+            
+            <a
+              href="https://intranetfront.netlify.app/login"
               className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50"
-              aria-haspopup="dialog"
-              aria-expanded={loginOpen}
+              aria-label="Se connecter"
             >
               <span className="sr-only">Se connecter</span>
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21a8 8 0 0 0-16 0" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-            </button>
+            </a>
+
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
@@ -154,4 +155,3 @@ export function SiteHeader() {
     </>
   );
 }
-
